@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <form id="registerForm">
+            <fieldset id="userInfo">
+                <legend>User Information:</legend>
+                <div class="pairContainer">
+                    <label for="username">Userame:</label>
+                    <input id="username" type="text">
+                </div>
+                <div class="pairContainer">
+                    <label for="email">Email:</label>
+                    <input id="email" type="text">
+                </div>
+                <div class="pairContainer">
+                    <label for="password">Passwrod:</label>
+                    <input id="password" type="password">
+                </div>
+                <div class="pairContainer">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input id="confirm-password" type="password">
+                </div>
+                <div class="pairContainer">
+                    <label for="company">Is Company?</label>
+                    <input id="company" type="checkbox">
+                </div>
+            </fieldset>
+            <fieldset id="companyInfo" style="display: none;">
+                <legend>Company Informaion:</legend>
+                <div class="pairContainer">
+                    <label for="companyNumber">Company Number</label>
+                    <input id="companyNumber" type="number">
+                </div>
+            </fieldset>
+            <button id="submit">Submit</button>
+        </form>
+        <div id="valid" style="display: none">Valid</div>
+    </div>
+    <script>
+        function validate() {
+            $('#company').on('change', showHideCompany);
+        
+            $('#submit').on('click', function (ev) {
+                ev.preventDefault();
+        
+                let usernameRegex = /^[a-zA-Z0-9]{3,20}$/;
+                let passwordRegex = /^\w{5,15}$/;
+                let emailRegex = /@.*\./;
+                let companyNumberRegex = /^[1-9]{1}[0-9]{3}$/;
+        
+                validateInput($('#username'), usernameRegex);
+                validateInput($('#email'), emailRegex);
+                validateInput($('#password'), passwordRegex);
+                validateInput($('#confirm-password'), passwordRegex);
+                validateInput($('#companyNumber'), companyNumberRegex);
+            });
+        
+            function validateInput(input, regex) {
+                if (!regex.test(input.val())) {
+                    input.css('border-color', 'red');
+                } else {
+                    input.css('border-color', 'black');
+                }
+            }
+        
+            function showHideCompany() {
+                if ($(this).is(':checked')) {
+                    $('#companyInfo').css('display', 'block');
+                } else {
+                    $('#companyInfo').css('display', 'none')
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
